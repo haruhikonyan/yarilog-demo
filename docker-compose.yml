@@ -1,5 +1,23 @@
 version: '3'
 services:
+  # a fully automated HTTPS server powered by Nginx, Let's Encrypt
+  # see https://github.com/SteveLTN/https-portal
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '80:80'
+      - '443:443'
+    links:
+      - nginx:app
+    environment:
+      DOMAINS: 'yarilog-demo.haruhiko.work -> http://nginx:8888'
+      STAGE: 'production'
+      FORCE_RENEW: 'false'
+      WEBSOCKET: 'true'
+      CLIENT_MAX_BODY_SIZE: 0
+    restart: unless-stopped
+    volumes:
+      - https-portal_data:/var/lib/https-portal
   nginx:
     build:
       context: .
@@ -11,19 +29,15 @@ services:
       - back
       - phpmyadmin
   front:
-    build:
-      context: .
-      dockerfile: Dockerfile.front
+    image: haruhiko/yarilog-front-demo:latest
     links:
       - back
     environment:
       HOST: 0.0.0.0
       baseApiUrl: 'http://nginx/back/'
-      baseBrouserApiUrl: 'http://localhost:8080'
+      baseBrouserApiUrl: 'https://yarilog-demo.haruhiko.work/back/'
   back:
-    build:
-      context: .
-      dockerfile: Dockerfile.back
+    image: haruhiko/yarilog-back-demo:latest
     links:
       - db
     environment:
@@ -45,3 +59,4 @@ services:
 volumes:
   mysql-data:
     driver: local
+  https-portal_data:
