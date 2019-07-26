@@ -18,7 +18,7 @@ services:
       - back
     environment:
       HOST: 0.0.0.0
-      baseApiUrl: 'http://nginx/api/'
+      baseApiUrl: 'http://nginx/back/'
       baseBrouserApiUrl: 'http://localhost:8080'
   back:
     build:
