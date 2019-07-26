@@ -1,0 +1,45 @@
+version: '3'
+services:
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile.front
+    links:
+      - back
+    ports:
+      - 3000:3000
+    environment:
+      HOST: 0.0.0.0
+      baseApiUrl: 'http://back:3000'
+      baseBrouserApiUrl: 'http://localhost:8080'
+  back:
+    build:
+      context: .
+      dockerfile: Dockerfile.back
+    links:
+      - db
+    ports:
+      - 8080:3000
+    environment:
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      TYPEORM_ENTITIES: dist/**/*.entity.js
+  db:
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "yarilog"
+    ports:
+      - 3306:3306
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8000:80
+    links:
+      - db:db
+volumes:
+  mysql-data:
+    driver: local

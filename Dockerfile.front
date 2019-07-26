@@ -1,0 +1,11 @@
+FROM node:10.15.1-alpine
+ENV LANG C.UTF-8
+
+WORKDIR /yarilog-front
+
+RUN apk add git && \
+  git clone https://github.com/haruhikonyan/yarilog-front.git . && \
+  yarn && \
+  yarn run build
+EXPOSE 3000
+CMD /bin/sh -c 'yarn run start'
