@@ -9,7 +9,7 @@ services:
     environment:
       HOST: 0.0.0.0
       baseApiUrl: 'http://back:3000/'
-      baseBrouserApiUrl: 'https://yarilog-demo.haruhiko.work:8080/'
+      baseBrouserApiUrl: 'http://yarilog-demo.haruhiko.work:8080/'
   back:
     image: haruhiko/yarilog-back-demo:latest
     ports:
