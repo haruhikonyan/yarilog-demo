@@ -5,6 +5,7 @@ WORKDIR /yarilog-back
 
 RUN apk add git && \
   git clone https://github.com/haruhikonyan/yarilog-back.git . && \
-  yarn
+  yarn && \
+  yarn run build:prod
 EXPOSE 3000
 CMD /bin/sh -c 'yarn run start:prod'

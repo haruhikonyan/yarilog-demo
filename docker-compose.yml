@@ -10,7 +10,7 @@ services:
     links:
       - nginx:app
     environment:
-      DOMAINS: 'yarilog-demo.haruhiko.work -> http://nginx:8888'
+      DOMAINS: 'yarilog-demo.haruhiko.work -> http://nginx'
       STAGE: 'production'
       FORCE_RENEW: 'false'
       WEBSOCKET: 'true'
@@ -22,8 +22,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.nginx
-    ports: 
-      - 8888:80
     links:
       - front
       - back
