@@ -1,0 +1,34 @@
+version: '3'
+services:
+  front:
+    image: haruhiko/yarilog-front-demo:latest
+    ports:
+      - 80:3000
+    links:
+      - back
+    environment:
+      HOST: 0.0.0.0
+      baseApiUrl: 'http://back:3000/'
+      baseBrouserApiUrl: 'https://yarilog-demo.haruhiko.work:8080/'
+  back:
+    image: haruhiko/yarilog-back-demo:latest
+    ports:
+      - 8080:3000
+    links:
+      - db
+    environment:
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      TYPEORM_ENTITIES: dist/**/*.entity.js
+  db:
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "yarilog"
+volumes:
+  mysql-data:
+    driver: local
+  https-portal_data:
