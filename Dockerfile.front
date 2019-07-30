@@ -3,6 +3,8 @@ ENV LANG C.UTF-8
 
 WORKDIR /yarilog-front
 
+ENV baseBrouserApiUrl https://yarilog-demo.haruhiko.work/back/
+
 RUN apk add git && \
   git clone https://github.com/haruhikonyan/yarilog-front.git . && \
   yarn && \
