@@ -4,6 +4,7 @@ ENV LANG C.UTF-8
 WORKDIR /yarilog-back
 
 RUN apk add git && \
+  apk --no-cache add --virtual builds-deps build-base python && \
   git clone https://github.com/haruhikonyan/yarilog-back.git . && \
   yarn && \
   yarn run build:prod
