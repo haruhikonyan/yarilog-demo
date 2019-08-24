@@ -1,0 +1,62 @@
+version: '3'
+services:
+  # a fully automated HTTPS server powered by Nginx, Let's Encrypt
+  # see https://github.com/SteveLTN/https-portal
+  # https-portal:
+  #   image: steveltn/https-portal:1
+  #   ports:
+  #     - '80:80'
+  #     - '443:443'
+  #   links:
+  #     - nginx:app
+  #   environment:
+  #     DOMAINS: 'yarilog-demo.haruhiko.work -> http://nginx'
+  #     STAGE: 'production'
+  #     FORCE_RENEW: 'false'
+  #     WEBSOCKET: 'true'
+  #     CLIENT_MAX_BODY_SIZE: 0
+  #   restart: unless-stopped
+  #   volumes:
+  #     - https-portal_data:/var/lib/https-portal
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - '80:80'
+    links:
+      - front
+      - back
+      - phpmyadmin
+  front:
+    image: haruhiko/yarilog-front-demo:latest
+    links:
+      - back
+    environment:
+      HOST: 0.0.0.0
+      baseApiUrl: 'http://nginx/back/'
+      baseBrouserApiUrl: 'https://yarilog-demo.haruhiko.work/back/'
+  back:
+    image: haruhiko/yarilog-back-demo:latest
+    links:
+      - db
+    environment:
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      TYPEORM_ENTITIES: dist/**/*.entity.js
+  db:
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "yarilog"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db:db
+volumes:
+  mysql-data:
+    driver: local
+  https-portal_data:
