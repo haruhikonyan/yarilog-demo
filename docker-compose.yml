@@ -44,8 +44,14 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: root
       TYPEORM_ENTITIES: dist/**/*.entity.js
-      TWITTER_API_KEY: 
-      TWITTER_API_SECRET: 
+      TWITTER_API_KEY: change_me
+      TWITTER_API_SECRET: change_me
+      FACEBOOK_APP_ID: change_me
+      FACEBOOK_APP_SECRET: change_me
+      GOOGLE_CONSUMER_KEY: change_me
+      GOOGLE_CONSUMER_SECRET: change_me
+      LINE_CHANNEL_ID: change_me
+      LINE_CHANNEL_SECRET: change_me
       FRONT_URL: 'https://yarilog-demo.haruhiko.work/'
       BACK_URL: 'https://yarilog-demo.haruhiko.work/back/'
   db:
