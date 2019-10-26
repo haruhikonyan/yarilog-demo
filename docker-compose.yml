@@ -34,6 +34,7 @@ services:
       HOST: 0.0.0.0
       baseApiUrl: 'http://nginx/back/'
       baseBrouserApiUrl: 'https://yarilog-demo.haruhiko.work/back/'
+      frontUrl: 'https://yarilog-demo.haruhiko.work/'
       gaId: 'UA-149009739-1'
 
   back:

@@ -4,6 +4,7 @@ ENV LANG C.UTF-8
 WORKDIR /yarilog-front
 
 ENV baseBrouserApiUrl https://yarilog-demo.haruhiko.work/back/
+ENV frontUrl https://yarilog-demo.haruhiko.work
 ENV gaId UA-149009739-1
 
 RUN apk add git && \
