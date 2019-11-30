@@ -6,6 +6,7 @@ WORKDIR /yarilog-front
 ENV baseBrouserApiUrl https://yarilog-demo.haruhiko.work/back/
 ENV frontUrl https://yarilog-demo.haruhiko.work
 ENV gaId UA-149009739-1
+ENV domainName yarilog-demo.haruhiko
 
 RUN apk add git && \
   git clone https://github.com/haruhikonyan/yarilog-front.git . && \
